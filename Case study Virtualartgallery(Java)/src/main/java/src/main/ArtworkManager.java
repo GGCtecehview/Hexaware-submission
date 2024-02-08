@@ -115,19 +115,22 @@ public class ArtworkManager {
     }
 
 
-    static void getArtworkById(IVirtualArtGallery galleryService, Scanner scanner) {
+    static void getArtworkById(IVirtualArtGallery galleryService, Scanner scanner) throws ArtWorkNotFoundException {
         System.out.print("Enter Artwork ID: ");
         int id = getIntegerInput(scanner);
 
-        try {
-            Artwork artwork = galleryService.getArtworkById(id);
+        Artwork artwork = galleryService.getArtworkById(id);
+        if (artwork != null) {
             System.out.println("Artwork Found: ");
             System.out.println("Title: " + artwork.getTitle());
-            // ... display other artwork details
-        } catch (ArtWorkNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Description: " + artwork.getDescription());
+            System.out.println("Medium: " + artwork.getMedium());
+            
+        } else {
+            System.out.println("Artwork not found.");
         }
     }
+
 
     static void removeArtwork(IVirtualArtGallery galleryService, Scanner scanner) {
         System.out.print("Enter the ID of the artwork to remove: ");
